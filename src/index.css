@@ -1,0 +1,197 @@
+/*
+.App {
+  justify-content: flex-start;
+}
+*/
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.icon {
+  width: 20px; 
+  height: 20px;
+ }
+
+
+.fullLLMContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3vh;
+  align-items: left;
+  width: 30vw;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+}
+
+/* system prompt area */
+
+.systemPromptHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjusts space between items */
+  justify-items: bottom
+}
+.systemPromptHeader h1 {
+  text-align: left;
+  margin-left: 10vw;
+}
+
+.systemPromptInputSection {
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+
+}
+
+.systemPromptInputSection textarea {
+  margin-left: 10vw;
+  width: 80%; /* Full width */
+  height: auto; /* Auto-height based on content */
+  min-height: 50px; /* Minimum height */
+  overflow-y: auto; /* Scrollable */
+  margin-bottom: 1rem; /* Space before the next section */
+  padding: 10px; /* Padding inside the textarea */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.toggleSystemPromptSection {
+  display: block;
+  justify-content: left;
+}
+
+/* user prompt area */
+
+.userPromptHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjusts space between items */
+  justify-items: bottom
+}
+.userPromptHeader h1 {
+  text-align: left;
+  margin-left: 10vw;
+}
+
+.userPromptInputSection {
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+
+}
+
+.userPromptInputSection textarea {
+  margin-left: 10vw;
+  width: 80%; /* Full width */
+  height: auto; /* Auto-height based on content */
+  min-height: 150px; /* Minimum height */
+  overflow-y: auto; /* Scrollable */
+  margin-bottom: 1rem; /* Space before the next section */
+  padding: 10px; /* Padding inside the textarea */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.toggleSystemPromptSection button{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.toggleUserPromptSection {
+  display: block;
+  justify-content: left;
+}
+.toggleUserPromptSection button{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.buttonSection {
+  margin-bottom: 1rem;
+}
+
+.modelTitle {
+  font-size: 25px;
+  font-weight: 700;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.selectModelProvider{
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.apiKey {
+  display: flex;
+  align-items: center;
+
+}
+
+.apiKeyInput {
+  width: 60%;
+}
+
+
+.selectModel{
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.whitespace-pre-line {
+  text-align: left;
+}
+
+/* model specks area */
+.modelSpecs {
+  width: 30vw;
+}
+
+.modelSpecs td,th {
+  border-top: 1px solid black;
+}
+
+/* text completeion area - output/response from LLM */
+
+.textCompletionContainer {
+  /* margin-top: 2vh; */
+  position: relative;
+  width: 30vw;
+  max-height: 50vh; 
+  border-top: 1px solid black;
+  overflow-y: auto; /* Keeps content scrollable */
+  align-self: center;
+  display: flex;
+}
+
+.textCompletionRow {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 90vh;
+}
+
+/* Styling the scrollbar - this is optional and might not work in all browsers */
+.textCompletionContainer::-webkit-scrollbar {
+  width: 10px;
+}
+.textCompletionContainer::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+
