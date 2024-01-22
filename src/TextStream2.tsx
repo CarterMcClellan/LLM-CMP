@@ -8,21 +8,21 @@ import Select from 'react-select';
 
 
 // const API_URL = "https://api.openai.com/v1/chat/completions";
-export type StreamingOpenAICompletionsProps = {
+export type StreamingCompletionsProps = {
     systemPrompt: string;
     userPrompt: string;
 };
 
-export type StreamingOpenAICompletionsHandle = {
+export type StreamingCompletionsHandle = {
     runGenerate: (systemPrompt: string, userPrompt: string) => Promise<void>;
     clear: () => void;
     stopGenerate: () => void;
     updateApiKey: (newKey: string) => void;
 };
 
-const StreamingOpenAICompletions = forwardRef<
-StreamingOpenAICompletionsHandle, 
-StreamingOpenAICompletionsProps
+const StreamingCompletions = forwardRef<
+StreamingCompletionsHandle, 
+StreamingCompletionsProps
 >((props, ref) => {
 
     const [combinedPrompt, setCombinedPrompt] = useState(`${props.systemPrompt}\n${props.userPrompt}`); 
@@ -42,7 +42,7 @@ StreamingOpenAICompletionsProps
             console.log("runGenerate called with systemPrompt", props.systemPrompt);
             console.log("runGenerate called with userPrompt", props.userPrompt);
             setCombinedPrompt(`${props.systemPrompt}\n${props.userPrompt}`);
-            await generate(combinedPrompt)
+            await generate(combinedPrompt, provider)
         },
         clear() {
             setResult("");
@@ -63,7 +63,7 @@ StreamingOpenAICompletionsProps
             implemented: true
         },
         {
-            value: "NVIDIA AI Plyground", label: "NVIDIA AI Plyground",
+            value: "NVIDIA AI Playground", label: "NVIDIA AI Playground",
             implemented: false
         },
         {
@@ -104,21 +104,21 @@ StreamingOpenAICompletionsProps
         },
     ]
 
-    const modelOptions = [
+    const openAIModelOptions = [
         // GPT 4 models...
         { 
           value: 'gpt-4-1106-preview', label: 'gpt-4-1106-preview', 
           // provider: "OpenAI",
           modelType: "Proprietary",
           url: "https://api.openai.com/v1/chat/completions", 
-          tokens: '4,096', data: 'Apr 2023' 
+          tokens: '128,000', data: 'Apr 2023' 
         },
         { 
           value: 'gpt-4-vision-preview', label: 'gpt-4-vision-preview', 
           // provider: "OpenAI",
           modelType: "Proprietary",
           url: "https://api.openai.com/v1/chat/completions", 
-          tokens: '4,096', data: 'Apr 2023' 
+          tokens: '128,000', data: 'Apr 2023' 
         },
         { 
           value: 'gpt-4', label: 'gpt-4', 
@@ -174,7 +174,8 @@ StreamingOpenAICompletionsProps
           // provider: "OpenAI",
           modelType: "Proprietary",
           url: "https://api.openai.com/v1/chat/completions", 
-          tokens: '4,096', data: 'Sep 2021' 
+          tokens: '4,096', 
+          data: 'Sep 2021' 
         },
         { 
           value: 'gpt-3.5-turbo-16k', label: 'gpt-3.5-turbo-16k', 
@@ -190,7 +191,9 @@ StreamingOpenAICompletionsProps
           url: "https://api.openai.com/v1/chat/completions", 
           tokens: '4,096', data: 'Sep 2021' 
         },
+  ];
 
+    const nvidiaPlaygroundModelOptions = [
         // NVIDIA Playground Models... 
         { 
           value: 'Yi-34B', label: 'Yi-34B', 
@@ -203,6 +206,8 @@ StreamingOpenAICompletionsProps
 
     const [provider, setProvider] = useState('');
     const [url, setUrl] = useState('');
+
+    let modelOptions = provider === "OpenAI" ? openAIModelOptions : provider === "NVIDIA AI Playground" ? nvidiaPlaygroundModelOptions : [];
 
     const [modelName, setModelName] = useState('');
     const [maxTokens, setMaxTokens] = useState('');
@@ -224,12 +229,12 @@ StreamingOpenAICompletionsProps
         if (isGenerating) {
             return <p>Generating answer ..." </p>
         } else if (!isGenerating && elapsedTime > 0) {
-            return <p>... {tokenCount} tokens generated in {elapsedTime/1000} s</p>;
+            return <p>... {tokenCount} tokens generated in {elapsedTime/1000}s {tokenCount/(elapsedTime/1000)} tokens per second. </p>;
         }
         return null;
     }
 
-    const generate = async (input: string) => {
+    const generate = async (input: string, provider: string) => {
         /*
         if (!input) {
             alert("Please enter a user prompt.");
@@ -243,63 +248,66 @@ StreamingOpenAICompletionsProps
 
         controllerRef.current = new AbortController();
 
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${API_KEY}`,
-                },
-                body: JSON.stringify({
-                    model: modelName,
-                    messages: [{ role: "user", content: input }],
-                    // max_tokens: 1024,
-                    stream: true,
-                }),
-                signal: controllerRef.current.signal,
-            });
-            
-            if (!response.body) {
-                console.error("Response body is undefined.");
-                return
-            }
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder("utf-8");
-            let contentResult = "";
-
-            var counter = 0;
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                const chunk = decoder.decode(value);
-                const lines = chunk.split("\n");
-                const parsedLines = lines
-                    .map(line => line.replace(/^data: /, "").trim())
-                    .filter(line => line !== "" && line !== "[DONE]")
-                    .map(line => JSON.parse(line));
-
-                for (const parsedLine of parsedLines) {
-                    const { choices } = parsedLine;
-                    const { delta } = choices[0];
-                    if (delta.content) {
-                        contentResult += delta.content;
-                        counter += 1
-                    }
+        if (provider = "OpenAI") {
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${API_KEY}`,
+                    },
+                    body: JSON.stringify({
+                        model: modelName,
+                        messages: [{ role: "user", content: input }],
+                        // max_tokens: 1024,
+                        stream: true,
+                    }),
+                    signal: controllerRef.current.signal,
+                });
+                
+                if (!response.body) {
+                    console.error("Response body is undefined.");
+                    return
                 }
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let contentResult = "";
 
-                setResult(contentResult);
-                setTokenCount(counter)
+                var counter = 0;
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split("\n");
+                    const parsedLines = lines
+                        .map(line => line.replace(/^data: /, "").trim())
+                        .filter(line => line !== "" && line !== "[DONE]")
+                        .map(line => JSON.parse(line));
+
+                    for (const parsedLine of parsedLines) {
+                        const { choices } = parsedLine;
+                        const { delta } = choices[0];
+                        if (delta.content) {
+                            contentResult += delta.content;
+                            counter += 1
+                        }
+                    }
+
+                    setResult(contentResult);
+                    setTokenCount(counter)
+                }
+            } catch (error) {
+                if (controllerRef.current.signal.aborted) {
+                    setResult("Request aborted.");
+                } else {
+                    console.error("Error:", error);
+                    setResult("Error occurred while generating.");
+                }
+            } finally {
+                setIsGenerating(false);
             }
-        } catch (error) {
-            if (controllerRef.current.signal.aborted) {
-                setResult("Request aborted.");
-            } else {
-                console.error("Error:", error);
-                setResult("Error occurred while generating.");
-            }
-        } finally {
-            setIsGenerating(false);
+
         }
 
         const endTime = Date.now();
@@ -335,6 +343,7 @@ StreamingOpenAICompletionsProps
 
             <div className="selectModel">
                 <span>Model:&nbsp;</span>
+                {}
                 <Select options={modelOptions} onChange={handleModelChange} placeholder={"select model"} />
             </div>
 
@@ -360,10 +369,16 @@ StreamingOpenAICompletionsProps
             )}
 
             <div className="textCompletionContainer">
+                {provider && (
+                    <>
+                        <p><b>DEBUG:</b> {provider}</p>
+                        <hr className="separator" />
+                    </>
+                )}
                 <div>
+                    <p><b>Status:</b> {renderStatusMessage()}</p>
                     <div >
                         <div id="resultContainer">
-                            DEBUG: {combinedPrompt}
                             <ReactMarkdown
                                 className="whitespace-pre-line"
                                 components={{
@@ -382,13 +397,9 @@ StreamingOpenAICompletionsProps
                                     }
                                 }}
                             >
-                                {result}
-
+                            {result}
                             </ReactMarkdown>
-
-                            {renderStatusMessage()}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -396,4 +407,4 @@ StreamingOpenAICompletionsProps
     );
 });
 
-export default StreamingOpenAICompletions;
+export default StreamingCompletions;

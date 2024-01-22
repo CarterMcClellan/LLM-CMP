@@ -23,13 +23,19 @@ code {
   height: 20px;
  }
 
+ .titleSection {
+  margin-top: 3vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+
+ }
 
 .fullLLMContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 3vh;
   align-items: left;
   width: 30vw;
+  margin-top: 3vh;
   margin-left: 1.5vw;
   margin-right: 1.5vw;
 }
@@ -40,22 +46,31 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Adjusts space between items */
-  justify-items: bottom
+  justify-items: bottom;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 .systemPromptHeader h1 {
   text-align: left;
+  /*
   margin-left: 10vw;
+  margin-right: 10vw;
+  */
 }
 
 .systemPromptInputSection {
-  margin-top: 2vh;
+  margin-top: 0vh;
   display: flex;
   align-items: center;
-
+  /*
+  margin-left: 10vw;
+  margin-right: 10vw;
+  */
 }
 
 .systemPromptInputSection textarea {
   margin-left: 10vw;
+  margin-right: 10vw;
   width: 80%; /* Full width */
   height: auto; /* Auto-height based on content */
   min-height: 50px; /* Minimum height */
@@ -77,22 +92,31 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Adjusts space between items */
-  justify-items: bottom
+  justify-items: bottom;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 .userPromptHeader h1 {
   text-align: left;
+  /*
   margin-left: 10vw;
+  margin-right: 10vw;
+  */
 }
 
 .userPromptInputSection {
-  margin-top: 2vh;
+  margin-top: 0vh;
   display: flex;
   align-items: center;
-
+  /*
+  margin-left: 10vw;
+  margin-right: 10vw;
+  */
 }
 
 .userPromptInputSection textarea {
   margin-left: 10vw;
+  margin-right: 10vw;
   width: 80%; /* Full width */
   height: auto; /* Auto-height based on content */
   min-height: 150px; /* Minimum height */
@@ -104,7 +128,7 @@ code {
 }
 
 .toggleSystemPromptSection button{
-  margin-top: 5px;
+  margin-top: 3vh;
   margin-bottom: 5px;
 }
 
@@ -113,26 +137,31 @@ code {
   justify-content: left;
 }
 .toggleUserPromptSection button{
-  margin-top: 5px;
+  margin-top: 3vh;
   margin-bottom: 5px;
 }
 
+/* generate..., clear... and stop ... buttons */
 .buttonSection {
   margin-bottom: 1rem;
+}
+
+.buttonSection button {
+  margin-right: 5px; /* Add space to the right of each button */
 }
 
 .modelTitle {
   font-size: 25px;
   font-weight: 700;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 3vh;
+  margin-bottom: 10px;
 }
 
 .selectModelProvider{
   display: flex;
   align-items: center;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 3vh;
+  margin-bottom: 10px;
 }
 
 .apiKey {
@@ -149,8 +178,8 @@ code {
 .selectModel{
   display: flex;
   align-items: center;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 3vh;
+  margin-bottom: 10px;
 }
 
 .whitespace-pre-line {
@@ -172,18 +201,26 @@ code {
   /* margin-top: 2vh; */
   position: relative;
   width: 30vw;
-  max-height: 50vh; 
+  max-height: 60vh; 
   border-top: 1px solid black;
   overflow-y: auto; /* Keeps content scrollable */
   align-self: center;
   display: flex;
+  flex-direction: column;
+}
+
+.separator {
+  width: 100%; /* Full width line */
+  border: none;
+  border-top: 1px solid grey;
+  margin: 10px 0; /* Add some space around the line */
 }
 
 .textCompletionRow {
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 90vh;
+  height: 50vh;
 }
 
 /* Styling the scrollbar - this is optional and might not work in all browsers */

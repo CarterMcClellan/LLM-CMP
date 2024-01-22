@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './App.css';
-import StreamingOpenAICompletions, { StreamingOpenAICompletionsHandle } from './TextStream2';
+import StreamingCompletions, { StreamingCompletionsHandle } from './TextStream2';
 
 import emptyIcon from "./icons/empty-text.png";
 import textIcon from "./icons/text.png";
@@ -15,9 +15,9 @@ function App() {
   const [showUserPrompt, setShowUserPrompt] = useState(true); 
 
   // create three unique handles for the Streaming... component
-  const streamingRef1 = useRef<StreamingOpenAICompletionsHandle>(null);
-  const streamingRef2 = useRef<StreamingOpenAICompletionsHandle>(null);
-  const streamingRef3 = useRef<StreamingOpenAICompletionsHandle>(null);
+  const streamingCompletionsRef1 = useRef<StreamingCompletionsHandle>(null);
+  const streamingCompletionsRef2 = useRef<StreamingCompletionsHandle>(null);
+  const streamingCompletionsRef3 = useRef<StreamingCompletionsHandle>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -68,9 +68,9 @@ function App() {
     setIsGenerating(true)
     
     await Promise.all([
-      streamingRef1.current?.runGenerate(systemPrompt, userPrompt),
-      streamingRef2.current?.runGenerate(systemPrompt, userPrompt),
-      streamingRef3.current?.runGenerate(systemPrompt, userPrompt)
+      streamingCompletionsRef1.current?.runGenerate(systemPrompt, userPrompt),
+      streamingCompletionsRef2.current?.runGenerate(systemPrompt, userPrompt),
+      streamingCompletionsRef3.current?.runGenerate(systemPrompt, userPrompt)
     ]);
 
     setIsGenerating(false)
@@ -80,18 +80,18 @@ function App() {
   };
 
   const callClear = () => {
-    streamingRef1.current?.clear();
-    streamingRef2.current?.clear();
-    streamingRef3.current?.clear();
+    streamingCompletionsRef1.current?.clear();
+    streamingCompletionsRef2.current?.clear();
+    streamingCompletionsRef3.current?.clear();
 
     setSystemPromptIsChanged(false);
     setUserPromptIsChanged(false);
   }
 
   const callStop = () => {
-    streamingRef1.current?.stopGenerate();
-    streamingRef2.current?.stopGenerate();
-    streamingRef3.current?.stopGenerate();
+    streamingCompletionsRef1.current?.stopGenerate();
+    streamingCompletionsRef2.current?.stopGenerate();
+    streamingCompletionsRef3.current?.stopGenerate();
 
     setSystemPromptIsChanged(false);
     setUserPromptIsChanged(false);
@@ -112,7 +112,7 @@ function App() {
             System Prompt&nbsp;
             {systemPrompt ? renderTextIcon(systemPromptIsChanged) : renderEmptyIcon()}
         <button onClick={() => setShowSystemPrompt(prev => !prev)}>
-          {showUserPrompt ? 'Hide System Prompt' : 'Show System Prompt'}
+          {showSystemPrompt ? 'Hide System Prompt' : 'Show System Prompt'}
         </button>
         </h1>
       </div>
@@ -173,9 +173,9 @@ function App() {
       </div>
 
       <div className="textCompletionRow">
-        <StreamingOpenAICompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingRef1}/>
-        <StreamingOpenAICompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingRef2}/>
-        <StreamingOpenAICompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingRef3}/>
+        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef1}/>
+        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef2}/>
+        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef3}/>
       </div>
     </div>
   );
