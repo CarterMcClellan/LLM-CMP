@@ -14,6 +14,9 @@ function App() {
   const [userPromptIsChanged, setUserPromptIsChanged] = useState(false);  
   const [showUserPrompt, setShowUserPrompt] = useState(true); 
 
+  // DEBUG flag - tied to Debug button...
+  const [debugFlag, setDebugFlag] = useState(true); 
+
   // create three unique handles for the Streaming... component
   const streamingCompletionsRef1 = useRef<StreamingCompletionsHandle>(null);
   const streamingCompletionsRef2 = useRef<StreamingCompletionsHandle>(null);
@@ -68,9 +71,9 @@ function App() {
     setIsGenerating(true)
     
     await Promise.all([
-      streamingCompletionsRef1.current?.runGenerate(systemPrompt, userPrompt),
-      streamingCompletionsRef2.current?.runGenerate(systemPrompt, userPrompt),
-      streamingCompletionsRef3.current?.runGenerate(systemPrompt, userPrompt)
+      streamingCompletionsRef1.current?.runGenerate(systemPrompt, userPrompt, debugFlag),
+      streamingCompletionsRef2.current?.runGenerate(systemPrompt, userPrompt, debugFlag),
+      streamingCompletionsRef3.current?.runGenerate(systemPrompt, userPrompt, debugFlag)
     ]);
 
     setIsGenerating(false)
@@ -170,12 +173,20 @@ function App() {
         {renderStartGenerateButton()}
         <button onClick={callClear}>Clear model outputs</button>
         <button onClick={callStop}>Stop Generation on all on models</button>
+        <button onClick={() => setDebugFlag(!debugFlag)}>
+          {debugFlag ? 'Turn Debug Off' : 'Turn Debug On'}
+        </button>
+        debug: {debugFlag ? "on" : "off"}
       </div>
 
       <div className="textCompletionRow">
-        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef1}/>
-        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef2}/>
-        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} ref={streamingCompletionsRef3}/>
+        <StreamingCompletions 
+          systemPrompt={systemPrompt} 
+          userPrompt={userPrompt} 
+          debugFlag={debugFlag} 
+          ref={streamingCompletionsRef1}/>
+        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} debugFlag={debugFlag} ref={streamingCompletionsRef2}/>
+        <StreamingCompletions systemPrompt={systemPrompt} userPrompt={userPrompt} debugFlag={debugFlag} ref={streamingCompletionsRef3}/>
       </div>
     </div>
   );

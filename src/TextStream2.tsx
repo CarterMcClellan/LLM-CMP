@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import ReactMarkdown from 'react-markdown';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -6,18 +6,17 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import Select from 'react-select';
 
-
-// const API_URL = "https://api.openai.com/v1/chat/completions";
 export type StreamingCompletionsProps = {
     systemPrompt: string;
     userPrompt: string;
+    debugFlag: boolean;
 };
 
 export type StreamingCompletionsHandle = {
-    runGenerate: (systemPrompt: string, userPrompt: string) => Promise<void>;
+    runGenerate: (systemPrompt: string, userPrompt: string, debugFlag: boolean ) => Promise<void>;
     clear: () => void;
     stopGenerate: () => void;
-    updateApiKey: (newKey: string) => void;
+    // updateApiKey: (newKey: string) => void;
 };
 
 const StreamingCompletions = forwardRef<
@@ -25,7 +24,8 @@ StreamingCompletionsHandle,
 StreamingCompletionsProps
 >((props, ref) => {
 
-    const [combinedPrompt, setCombinedPrompt] = useState(`${props.systemPrompt}\n${props.userPrompt}`); 
+    const [combinedPrompt, setCombinedPrompt] = useState("");
+    const [debugFlag, setDebugFlag] = useState(false);
 
     const [result, setResult] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
@@ -41,8 +41,12 @@ StreamingCompletionsProps
         async runGenerate() {
             console.log("runGenerate called with systemPrompt", props.systemPrompt);
             console.log("runGenerate called with userPrompt", props.userPrompt);
-            setCombinedPrompt(`${props.systemPrompt}\n${props.userPrompt}`);
+
+            // setResult("");
+            await setCombinedPrompt(`${props.systemPrompt}\n${props.userPrompt}`);
+            setDebugFlag(props.debugFlag)
             await generate(combinedPrompt, provider)
+
         },
         clear() {
             setResult("");
@@ -52,9 +56,9 @@ StreamingCompletionsProps
         stopGenerate() {
             stop();
         },
-        updateApiKey(newKey: string) {
-            setAPI_KEY(newKey);
-        }
+        // updateApiKey(newKey: string) {
+        //     setAPI_KEY(newKey);
+        //  }
     }));
 
     const providers = [ 
@@ -226,10 +230,29 @@ StreamingCompletionsProps
     }
 
     function renderStatusMessage() {
-        if (isGenerating) {
-            return <p>Generating answer ..." </p>
+        if (provider == '') {
+            return <p><b>Provider Not Selected ...</b></p>
+
+        } else if (API_KEY == '') {
+            return <p><b>API Key Not Set ...</b></p>
+
+        } else if (modelName == '') {
+            return <p><b>Model Not Selected ...</b></p>
+
+
+        } else if (isGenerating) {
+            return <p><b>Generating response ...</b></p>
+
         } else if (!isGenerating && elapsedTime > 0) {
-            return <p>... {tokenCount} tokens generated in {elapsedTime/1000}s {tokenCount/(elapsedTime/1000)} tokens per second. </p>;
+            const elapsedTimeInSeconds = (elapsedTime / 1000).toFixed(2);
+            const tokensPerSecond = (tokenCount / (elapsedTime / 1000)).toFixed(2);
+            return (
+                <>
+                    <p><b>Response Complete...</b></p>
+                    <p>   {tokenCount} tokens generated in {elapsedTimeInSeconds}s </p> 
+                    <p>   {tokensPerSecond} tokens per second. </p>
+                </>
+            )
         }
         return null;
     }
@@ -242,13 +265,13 @@ StreamingCompletionsProps
         }
         */
 
-        setIsGenerating(true);
-        setResult("Generating answer ...");
+        setResult("...");
         const startTime = Date.now();
 
         controllerRef.current = new AbortController();
 
-        if (provider = "OpenAI") {
+        if (provider == "OpenAI" ||provider == "NVIDIA AI Playground") {
+            setIsGenerating(true);
             try {
                 const response = await fetch(API_URL, {
                     method: "POST",
@@ -349,38 +372,49 @@ StreamingCompletionsProps
 
             {modelName && (
                 <table className='modelSpecs'>
+                    {/*
                 <thead>
                     <tr>
-                    {/* <th>Model Name</th> */}
-                    <th>Token Limit</th>
-                    <th>Training Data Date</th>
-                    <th>Url</th>
+                    <th>Attribute</th>
+                    <th>Value</th>
                     </tr>
                 </thead>
+                    */}
                 <tbody>
                     <tr>
-                    {/* <td>{modelName}</td> */}
-                    <td>{maxTokens}</td>
-                    <td>{trainingDataDate}</td>
-                    <td>{url}</td>
+                        <td>Max Tokens</td>
+                        <td>{maxTokens}</td>
+                    </tr>
+                    <tr>
+                        <td>Training Data Date</td>
+                        <td>{trainingDataDate}</td>
+                    </tr>
+                    <tr>
+                        <td>URL</td>
+                        <td>{url}</td>
                     </tr>
                 </tbody>
                 </table>
             )}
 
             <div className="textCompletionContainer">
-                {provider && (
+                {debugFlag && (
                     <>
-                        <p><b>DEBUG:</b> {provider}</p>
+                        <h2>DEBUG</h2>
+                            <p><i>provider:</i> {provider}</p>
+                            <p><i>compbined prompt:</i> "{combinedPrompt}"</p>
                         <hr className="separator" />
                     </>
                 )}
                 <div>
-                    <p><b>Status:</b> {renderStatusMessage()}</p>
+                    <>
+                        {renderStatusMessage()}
+                        <hr className="separator" />
+                    </>
                     <div >
                         <div id="resultContainer">
                             <ReactMarkdown
-                                className="whitespace-pre-line"
+                                className="whitespace-pre-line markdown-table"
                                 components={{
                                     code({node, className, children, ...props}) {
                                         const match = /language-(\w+)/.exec(className || '')

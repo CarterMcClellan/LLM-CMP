@@ -18,15 +18,36 @@ code {
     monospace;
 }
 
+.markdown-table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.markdown-table th, .markdown-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.markdown-table th {
+    background-color: #f2f2f2;
+}
+
+
 .icon {
   width: 20px; 
   height: 20px;
  }
 
  .titleSection {
-  margin-top: 3vh;
+  margin-top: 0vh;
   margin-left: 10vw;
   margin-right: 10vw;
+
+ }
+
+ .titleSection h1 {
+  color: green; 
 
  }
 
@@ -191,9 +212,15 @@ code {
   width: 30vw;
 }
 
-.modelSpecs td,th {
+.modelSpecs th {
   border-top: 1px solid black;
+  border-bottom: 1px solid darkgray;
 }
+
+.modelSpecs td {
+  justify-content: left;
+}
+
 
 /* text completeion area - output/response from LLM */
 
