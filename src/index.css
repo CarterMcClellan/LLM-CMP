@@ -1,9 +1,3 @@
-/*
-.App {
-  justify-content: flex-start;
-}
-*/
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -19,37 +13,35 @@ code {
 }
 
 .markdown-table table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-.markdown-table th, .markdown-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.markdown-table th,
+.markdown-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 .markdown-table th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
-
 .icon {
-  width: 20px; 
+  width: 20px;
   height: 20px;
- }
+}
 
- .titleSection {
+.titleSection {
   margin-top: 0vh;
   margin-left: 10vw;
   margin-right: 10vw;
+}
 
- }
-
- .titleSection h1 {
-  color: green; 
-
- }
+.titleSection h1 {
+  color: green;
+}
 
 .fullLLMContainer {
   display: flex;
@@ -148,7 +140,7 @@ code {
   border-radius: 4px; /* Rounded corners */
 }
 
-.toggleSystemPromptSection button{
+.toggleSystemPromptSection button {
   margin-top: 3vh;
   margin-bottom: 5px;
 }
@@ -157,7 +149,7 @@ code {
   display: block;
   justify-content: left;
 }
-.toggleUserPromptSection button{
+.toggleUserPromptSection button {
   margin-top: 3vh;
   margin-bottom: 5px;
 }
@@ -178,7 +170,7 @@ code {
   margin-bottom: 10px;
 }
 
-.selectModelProvider{
+.selectModelProvider {
   display: flex;
   align-items: center;
   margin-top: 3vh;
@@ -188,15 +180,13 @@ code {
 .apiKey {
   display: flex;
   align-items: center;
-
 }
 
 .apiKeyInput {
   width: 60%;
 }
 
-
-.selectModel{
+.selectModel {
   display: flex;
   align-items: center;
   margin-top: 3vh;
@@ -221,14 +211,13 @@ code {
   justify-content: left;
 }
 
-
 /* text completeion area - output/response from LLM */
 
 .textCompletionContainer {
   /* margin-top: 2vh; */
   position: relative;
   width: 30vw;
-  max-height: 60vh; 
+  max-height: 60vh;
   border-top: 1px solid black;
   overflow-y: auto; /* Keeps content scrollable */
   align-self: center;
@@ -258,4 +247,3 @@ code {
   background-color: darkgrey;
   border-radius: 10px;
 }
-

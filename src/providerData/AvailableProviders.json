@@ -1,0 +1,57 @@
+[
+    {
+      "value": "OpenAI",
+      "label": "OpenAI",
+      "implemented": true
+    },
+    {
+      "value": "NVIDIA AI Playground",
+      "label": "NVIDIA AI Playground",
+      "implemented": false
+    },
+    {
+      "value": "Amazon Bedrock",
+      "label": "Amazon Bedrock",
+      "implemented": false
+    },
+    {
+      "value": "Google Vertex AI",
+      "label": "Google Vertex AI",
+      "implemented": false
+    },
+    {
+      "value": "Lepton AI",
+      "label": "Lepton AI",
+      "implemented": false
+    },
+    {
+      "value": "HuggingFace Spaces",
+      "label": "HuggingFace Spaces",
+      "implemented": false
+    },
+    {
+      "value": "HuggingFace Interface Pro",
+      "label": "HuggingFace Interface Pro",
+      "implemented": false
+    },
+    {
+      "value": "Together.ai",
+      "label": "Together.ai",
+      "implemented": false
+    },
+    {
+      "value": "Replicate",
+      "label": "Replicate",
+      "implemented": false
+    },
+    {
+      "value": "Fireworks.ai",
+      "label": "Fireworks.ai",
+      "implemented": false
+    },
+    {
+      "value": "OctoAI",
+      "label": "OctoAI",
+      "implemented": false
+    }
+]

@@ -1,0 +1,98 @@
+[
+    {
+      "value": "gpt-4-1106-preview",
+      "label": "gpt-4-1106-preview",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "128,000",
+      "data": "Apr 2023"
+    },
+    {
+      "value": "gpt-4-vision-preview",
+      "label": "gpt-4-vision-preview",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "128,000",
+      "data": "Apr 2023"
+    },
+    {
+      "value": "gpt-4",
+      "label": "gpt-4",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "8,192",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-4-32k",
+      "label": "gpt-4-32k",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "32,768",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-4-0613",
+      "label": "gpt-4-0613",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "8,192",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-4-32k-0613",
+      "label": "gpt-4-32k-0613",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "32,768",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-4-0314",
+      "label": "gpt-4-0314",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "8,192",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-4-32k-0314",
+      "label": "gpt-4-32k-0314",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "32,768",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-3.5-turbo-1106",
+      "label": "gpt-3.5-turbo-1106",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "16,385",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-3.5-turbo",
+      "label": "gpt-3.5-turbo",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "4,096",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-3.5-turbo-16k",
+      "label": "gpt-3.5-turbo-16k",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "16,385",
+      "data": "Sep 2021"
+    },
+    {
+      "value": "gpt-3.5-turbo-instruct",
+      "label": "gpt-3.5-turbo-instruct",
+      "modelType": "Proprietary",
+      "url": "https://api.openai.com/v1/chat/completions",
+      "tokens": "4,096",
+      "data": "Sep 2021"
+    }
+  ]

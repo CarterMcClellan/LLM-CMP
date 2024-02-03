@@ -1,0 +1,11 @@
+[
+    {
+      "value": "Yi-34B",
+      "label": "Yi-34B",
+      "modelType": "Community",
+      "url": "https://api.nvcf.nvidia.com/v2/nvcf/pexec/functions/347fa3f3-d675-432c-b844-669ef8ee53df",
+      "tokens": "4,096",
+      "data": "Sep 2021"
+    }
+  ]
+  
